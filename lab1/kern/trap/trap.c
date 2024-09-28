@@ -155,11 +155,17 @@ void exception_handler(struct trapframe *tf) {
             break;
         case CAUSE_ILLEGAL_INSTRUCTION:
              // 非法指令异常处理
-             /* LAB1 CHALLENGE3   YOUR CODE :  */
+             /* LAB1 CHALLENGE3   2212221 :  */
             /*(1)输出指令异常类型（ Illegal instruction）
              *(2)输出异常指令地址
              *(3)更新 tf->epc寄存器
             */
+		cprintf("Exception type:Illegal instruction");
+		uint64_t sepc;
+		asm volatile("csrr %0, mepc" : "=r"(sepc));
+		//内嵌汇编指令读取spec寄存器
+		cprintf("Illegal instruction caught at 0x%08x\n",sepc);
+		tf->epc=sepc;
             break;
         case CAUSE_BREAKPOINT:
             //断点异常处理
