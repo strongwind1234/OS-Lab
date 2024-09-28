@@ -120,7 +120,7 @@ void interrupt_handler(struct trapframe *tf) {
 		num++;
 	    }
 	    if(num==10){
-		bi_shutdown();
+		sbi_shutdown();
 	    }
             break;
         case IRQ_H_TIMER:
