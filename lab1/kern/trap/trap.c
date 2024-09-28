@@ -160,9 +160,9 @@ void exception_handler(struct trapframe *tf) {
              *(2)输出异常指令地址
              *(3)更新 tf->epc寄存器
             */
-		cprintf("Exception type:Illegal instruction");
+		cprintf("Exception type:Illegal instruction\n");
 		uint64_t sepc;
-		asm volatile("csrr %0, mepc" : "=r"(sepc));
+		asm volatile("csrr %0, sepc" : "=r"(sepc));
 		//内嵌汇编指令读取spec寄存器
 		cprintf("Illegal instruction caught at 0x%08x\n",sepc);
 		tf->epc=sepc;
