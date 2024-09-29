@@ -163,11 +163,16 @@ void exception_handler(struct trapframe *tf) {
             break;
         case CAUSE_BREAKPOINT:
             //断点异常处理
-            /* LAB1 CHALLLENGE3   YOUR CODE :  */
+            /* LAB1 CHALLLENGE3   2113874 :  */
             /*(1)输出指令异常类型（ breakpoint）
              *(2)输出异常指令地址
              *(3)更新 tf->epc寄存器
             */
+           cprintf("Exception type: breakpoint");
+           uint64_t sepc;
+           asm volatile("csrr %0,sepc" : "=r"(sepc));
+           cprintf("ebreak caught at 0x%08x\n",sepc);
+           tf->epc=sepc;
             break;
         case CAUSE_MISALIGNED_LOAD:
             break;
