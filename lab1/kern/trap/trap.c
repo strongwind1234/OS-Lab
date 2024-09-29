@@ -114,7 +114,7 @@ void interrupt_handler(struct trapframe *tf) {
             */
             clock_set_next_event();
             ticks++;
-            if(ticks==100){
+            if(ticks==TICK_NUM){
             print_ticks();
             ticks=0;
             num++;
@@ -168,12 +168,10 @@ void exception_handler(struct trapframe *tf) {
              *(2)输出异常指令地址
              *(3)更新 tf->epc寄存器
             */
-           cprintf("Exception type: breakpoint");
-           uint64_t sepc;
-           asm volatile("csrr %0,sepc" : "=r"(sepc));
-           cprintf("ebreak caught at 0x%08x\n",sepc);
-           tf->epc=sepc;
-            break;
+           cprintf("Exception type: breakpoint\n");
+           cprintf("ebreak caught at 0x%08x\n",tf->epc);
+           tf->epc += 3;
+           break;
         case CAUSE_MISALIGNED_LOAD:
             break;
         case CAUSE_FAULT_LOAD:
