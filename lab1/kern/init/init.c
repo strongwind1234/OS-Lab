@@ -33,6 +33,9 @@ int kern_init(void) {
 
     intr_enable();  // enable irq interrupt
     
+    asm volatile("ebreak");
+    asm volatile(".word 0x3052FFFF");
+    
     while (1)
         ;
 }
