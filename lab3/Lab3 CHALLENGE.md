@@ -1,14 +1,14 @@
-#Lab3 CHALLENGE报告
+# Lab3 CHALLENGE报告
 **组员：梁锦洲，赵乐**
 
-##设计思路
+## 设计思路
 LRU算法是根据时间局部性来选择被置换出的页面。根据这个规则及实验框架，按照以下思路设计：
 -双向链表按照页面被访问的顺序排列，最近访问的页面在链表的头部，最久未访问的页面在链表的尾部。
 -当一个页面被访问时，如果它已经在内存中，就将其节点移动到链表头部。
 -当需要替换页面时，移除链表尾部的节点，即最久未访问的页面。
 
-##源代码
-###swap_lru.h
+## 源代码
+### swap_lru.h
 ```c
 #ifndef __KERN_MM_SWAP_CLOCK_H__
 #define __KERN_MM_SWAP_CLOCK_H__
@@ -18,7 +18,7 @@ extern struct swap_manager swap_manager_lru;
 
 #endif
 ```
-###swap_lru.c
+### swap_lru.c
 ```c
 #include <defs.h>
 #include <riscv.h>
