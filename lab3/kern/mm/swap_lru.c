@@ -29,7 +29,7 @@ _lru_map_swappable(struct mm_struct *mm, uintptr_t addr, struct Page *page, int 
  
     assert(entry != NULL && curr_ptr != NULL);
     //record the page access situlation
-    /*LAB3 CHALLENGE: 2212221*/ 
+    /*LAB3 CHALLENGE: 2212221 2113874*/ 
     // link the most recent arrival page at the back of the pra_list_head qeueue.
     // 如果页面在链表头部，则不做处理
     if(list_prev(&pra_list_head) == entry){
