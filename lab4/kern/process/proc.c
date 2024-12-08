@@ -314,6 +314,7 @@ do_fork(uint32_t clone_flags, uintptr_t stack, struct trapframe *tf) {
     if(proc == NULL){
         goto bad_fork_cleanup_proc;
     }
+    proc->parent = current;//将新进程的父进程设置为当前进程
     //    2. call setup_kstack to allocate a kernel stack for child process
     if(setup_kstack(proc) != 0){
         goto bad_fork_cleanup_kstack;
@@ -325,6 +326,7 @@ do_fork(uint32_t clone_flags, uintptr_t stack, struct trapframe *tf) {
     //    4. call copy_thread to setup tf & context in proc_struct
     copy_thread(proc,stack,tf);
     //    5. insert proc_struct into hash_list && proc_list
+    proc->pid = get_pid();
     hash_proc(proc); // 插入哈希表
     list_add(&proc_list, &(proc->list_link)); // 插入全局进程列表
     nr_process++; //全局变量nr_process加1，表示系统中的进程数增加了一个。
