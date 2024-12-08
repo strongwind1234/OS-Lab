@@ -113,7 +113,7 @@ alloc_proc(void) {
         proc->tf = NULL;                                    // trapframe 初始为空
         proc->cr3 = boot_cr3;                               // 使用内核页目录表的基址
         proc->flags = 0;                                    // 清除所有标志位
-        set_proc_name(proc,"initial_name");                 // 设置初始名称
+        memset(proc->name, 0, sizeof(proc->name));          // 进程名称清空
 
     }
     return proc;
@@ -327,13 +327,12 @@ do_fork(uint32_t clone_flags, uintptr_t stack, struct trapframe *tf) {
     //    5. insert proc_struct into hash_list && proc_list
     hash_proc(proc); // 插入哈希表
     list_add(&proc_list, &(proc->list_link)); // 插入全局进程列表
-
+    nr_process++; //全局变量nr_process加1，表示系统中的进程数增加了一个。
     //    6. call wakeup_proc to make the new child process RUNNABLE
     wakeup_proc(proc);
     //    7. set ret vaule using child proc's pid
     ret = proc->pid;
 
-    
 
 fork_out:
     return ret;
